@@ -5,8 +5,8 @@ fetch = require('node-fetch'),
   By = webdriver.By,
   until  = webdriver.until;
 
-var outlookEmail = "steele2345@outlook.com";
-var outlookPw = "only2day24"
+var outlookEmail = // enter credenetials
+var outlookPw = // enter credenetials
 
 function sendDataToNode(listofUsers) {
   var data = JSON.stringify(listofUsers);
