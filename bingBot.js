@@ -1,12 +1,13 @@
 require('chromedriver');
 var webdriver = require('selenium-webdriver'),
-routes = require('./routes.js'),
 fetch = require('node-fetch'),
   By = webdriver.By,
   until  = webdriver.until;
 
-var outlookEmail = // enter credenetials
-var outlookPw = // enter credenetials
+let outlookLogin = [["testing@outlook.com", "testme"]];
+
+let writeWords = (driver) => {
+  let url = "http://www.bing.com/search?q=", intId, options = ["testing", "this", "out", "please", "tell", "me", "what", "is", "the", "result"]  
 
 function sendDataToNode(listofUsers) {
   var data = JSON.stringify(listofUsers);
@@ -41,33 +42,33 @@ let writeWords = (driver) => {
 }
 
 function checkAllArr(driver){
-  setTimeout(() => {
-    let login = driver.findElement(By.id("id_s"));
-    login.click();
-    setTimeout(()=>{
-      let connect = driver.findElement(By.className("b_toggle"));
-      connect.click();
-    }, 1000);
-    setTimeout(()=>{
-    let email = driver.findElement(By.id("i0116"));
-    email.sendKeys(outlookEmail);
-    let nextBtn = driver.findElement(By.id("idSIButton9"));
-    nextBtn.click();
+  let signInBtn, pwdDescEl, pwdEl;
+  driver.wait(until.elementLocated(By.id("id_s")), 1000).then((el) => {
+    el.click();
+  });
 
-        setTimeout(()=>{
-          let password = driver.findElement(By.id("i0118"));
-          password.sendKeys(outlookPw);
-          var submitButton = driver.findElement(By.id("idSIButton9"));
-          submitButton.click();
-          writeWords(driver);
-        }, 40000);
-    }, 3000);
+  driver.wait(until.elementLocated(By.className("b_toggle")), 4000).then((el) => {
+    el.click();
+  });
 
-  }, 5000);
+  driver.wait(until.elementLocated(By.id("i0116")), 7000).then((el) => {
+    el.sendKeys(outlookLogin[0][0]);
+    driver.findElement(By.id("idSIButton9")).click();
+  });
+
+  driver.wait(until.elementLocated(By.id("passwordDesc")), 10000).then(() => {
+    pwdEl = driver.findElement(By.id("i0118"));
+    pwdEl.sendKeys(outlookLogin[0][1]);
+
+    signInBtn = driver.findElement(By.id("idSIButton9"));
+    signInBtn.click();
+  });
 }
 
-(function startUpChrome(url) {
+function startUpChrome(url) {
   let driver = new webdriver.Builder().forBrowser('chrome').build();
   driver.get(url);
   checkAllArr(driver);
-})("https://www.bing.com/");
+}
+startUpChrome("https://www.bing.com/");
+
