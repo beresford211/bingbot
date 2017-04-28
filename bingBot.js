@@ -1,8 +1,8 @@
 require('chromedriver');
-var webdriver = require('selenium-webdriver'),
+let webdriver = require('selenium-webdriver'),
 fetch = require('node-fetch'),
-  By = webdriver.By,
-  until  = webdriver.until;
+By = webdriver.By,
+until  = webdriver.until;
 
 let outlookLogin = [["testing@outlook.com", "testme"]], isVisible;
 
