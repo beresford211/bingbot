@@ -8,7 +8,31 @@ let outlookLogin = [["testing@outlook.com", "testme"]], signInBtn, pwdDescEl, pw
 
 // After being logged in randomly search for words picked out of the array.
 let writeWords = (driver) => {
-  let url = "http://www.bing.com/search?q=", intId, options = ["testing", "this", "out", "please", "tell", "me", "what", "is", "the", "result"]
+  let url = "http://www.bing.com/search?q=", intId, options = ["testing", "this", "out", "please", "tell", "me", "what", "is", "the", "result"]  
+
+function sendDataToNode(listofUsers) {
+  var data = JSON.stringify(listofUsers);
+  console.log("data", typeof data);
+	fetch("http://localhost:8888/submituserData", {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: data,
+		success: function(data) {
+      console.log("Data", data);
+		},
+		error: function(err) {
+		  console.log("This is your err ", err);
+		}
+	});
+}
+
+
+let writeWords = (driver) => {
+  let url = "http://www.bing.com/search?q=", options = ["testing", "this", "out", "please", "tell", "me", "what", "is", "the", "result"]
+  let intId
   intId = setInterval(()=>{
       if(options.length === 0){
         clearInterval(intId);
@@ -52,3 +76,4 @@ function startUpChrome(url) {
   checkAllArr(driver);
 }
 startUpChrome("https://www.bing.com/");
+
